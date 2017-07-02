@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href="hangman.css">
+</head>
+<body>
+	<script type="text/javascript">
+		var teams = [
+	["A", "R", "S", "E", "N", "A", "L"],
+  	["C", "H", "E", "L", "S", "E", "A"],
+  	["T", "O", "T", "T", "E", "N", "H", "A","M"],
+  	["M", "A", "N", "C", "H", "E", "S", "T", "E", "R"],
+  	["L", "I", "V", "E", "R", "P", "O", "O", "L"],
+]
+
+var random = Math.floor((Math.random()*(teams.length-1))); 
+
+var chosenWord = teams[random]; // the word to guess will be chosen from the array above
+var wordChoice = new Array(chosenWord.length);
+var base = 0;
+
+// every letter in the word is symbolized by an underscore in the guessfield
+for (var i = 0; i < wordChoice.length; i++){
+	wordChoice[i] = "_ ";
+}
+
+// on key up event checks if the the letter provided by the user matches one or more of the letters in the word
+var onKey = function(){
+	var f = document.rateformula; 
+	var b = f.onkeyup["goodAnswer"]; 
+	var letters = b.value; // the letter provided by the user
+	letters = letters.toUpperCase();
+	for (var i = 0; i < teams.length; i++){
+		if(teams[i] === letters){
+			wordChoice[i] = letters + " ";
+			var answer = true;
+		}
+	b.value = "";
+	}
+	
+	
+	// if a guessed letter is not in the word, the letter will be put on the "wrong letters"-list
+	if(!answer){
+		var badAnswer = document.getElementById("badAnswer");
+		var badLetter = document.createTextNode(" " + letters);
+		
+	
+	//checks if all letters have been found
+	var correctAnswer = true;
+	for (var i = 0; i < wordChoice.length; i++){
+		if(wordChoice[i] === "_ "){
+			correctAnswer = false;
+		}
+	}
+	if(correctAnswer){
+		window.alert("You win!");
+	}
+	
+	//once you got six wrong letters, you lose
+	if(answer === 6){
+		window.alert("RIP");
+	}
+}
+
+
+	</script>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<h1>Hangman! A game of life or death....<br>
+  Press on a key to guess a letter</h1>
+  <p>Hint: British Premier League Cities</p>
+<p id="ratefeld"></p>
+<form name="rateformular">
+<input name="goodAnswer" type="text" size="5" maxlength="1">
+<input name="ratebutton" type="button" value="Guess" onClick="onKey()">
+
+<p id="wordChoice">Wrong Letters:</p>
+<img src="http://www.ilearngreek.com/images/p.png" id="hangman"><br />
+<input name="refresh" type="button" value="New Game" onClick="location.reload()">
+</form>
+
+	
+</body>
+</html>
